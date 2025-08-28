@@ -1,6 +1,3 @@
-# media-tracking
-media tracking tools and setup of it 
-
 # GoPlaxt & Plexytrack — Runbook (Oracle Cloud)
 
 *Last updated: 28 Aug 2025 (NZ)*
