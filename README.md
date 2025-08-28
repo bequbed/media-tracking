@@ -273,3 +273,77 @@ git rm --cached docker-compose.yml
 * **Plexytrack:** `/opt/plexytrack/config/auth.json` (Trakt + Simkl), `/opt/plexytrack/config/settings.json` (Plex + schedule).
 
 > Treat `config/` like secrets: back it up, don’t commit it, and rotate on exposure.
+
+## Appendix B — Redacted example config files
+
+### B.1 Redacted `auth.json` (Plexytrack)
+
+```json
+{
+  "trakt": {
+    "access_token": "REDACTED_ACCESS_TOKEN",
+    "refresh_token": "REDACTED_REFRESH_TOKEN",
+    "expires_at": "2025-09-02T12:34:56Z",
+    "client_id": "REDACTED_CLIENT_ID",
+    "client_secret": "REDACTED_CLIENT_SECRET"
+  },
+  "simkl": {
+    "access_token": "REDACTED_SIMKL_TOKEN",
+    "refresh_token": "REDACTED_SIMKL_REFRESH",
+    "expires_at": "2025-09-02T12:34:56Z"
+  },
+  "plex": {
+    "token": "REDACTED_PLEX_TOKEN"
+  }
+}
+```
+
+### B.2 Redacted `settings.json` (Plexytrack)
+
+```json
+{
+  "plex": {
+    "base_url": "https://your-plex-domain.plex.direct:32400",
+    "token": "REDACTED_PLEX_TOKEN",
+    "verify_ssl": false
+  },
+  "trakt": {
+    "client_id": "REDACTED_CLIENT_ID",
+    "client_secret": "REDACTED_CLIENT_SECRET",
+    "webhook_enabled": true
+  },
+  "simkl": {
+    "client_id": "REDACTED_SIMKL_ID",
+    "client_secret": "REDACTED_SIMKL_SECRET"
+  },
+  "sync": {
+    "libraries": ["Movies", "TV Shows"],
+    "mode": "two_way",
+    "remove_watched": true
+  },
+  "schedule": {
+    "enabled": true,
+    "cron": "*/15 * * * *"
+  },
+  "logging": {
+    "level": "info",
+    "file": "/config/sync.log"
+  }
+}
+```
+
+### B.3 Redacted GoPlaxt environment / .env example
+
+```
+TRAKT_CLIENT_ID=REDACTED_CLIENT_ID
+TRAKT_CLIENT_SECRET=REDACTED_CLIENT_SECRET
+PLEX_TOKEN=REDACTED_PLEX_TOKEN
+PLEX_SERVER_URL=https://your-plex-domain.plex.direct:32400
+TZ=Pacific/Auckland
+```
+
+> **Notes:**
+>
+> * These examples are intentionally redacted. Replace `REDACTED_*` placeholders with the real tokens/IDs on the server.
+> * Never commit files containing real secrets to Git. Add `/opt/goplaxt/docker-compose.yml` and `/opt/plexytrack/config/*` to `.gitignore` if you track the repo locally.
+> * After updating tokens, restart the containers: `docker compose restart` in each project folder.
